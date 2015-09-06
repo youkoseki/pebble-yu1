@@ -4,7 +4,7 @@
 
 static Window *window;
 static Layer *s_simple_bg_layer, *s_date_layer, *s_hands_layer;
-static TextLayer *s_day_label, *s_num_label;
+static TextLayer *s_num_label;
 
 static GPath *s_minute_arrow, *s_hour_arrow;
 static char s_num_buffer[4], s_day_buffer[6];
@@ -55,6 +55,7 @@ static void date_update_proc(Layer *layer, GContext *ctx) {
 
   strftime(s_num_buffer, sizeof(s_num_buffer), "%M", t);
   text_layer_set_text(s_num_label, s_num_buffer);
+//  text_layer_set_text(s_num_label,"22");
 }
 
 static void handle_second_tick(struct tm *tick_time, TimeUnits units_changed) {
@@ -88,12 +89,12 @@ static void window_load(Window *window) {
   layer_set_update_proc(s_hands_layer, hands_update_proc);
   layer_add_child(window_layer, s_hands_layer);
 
-  s_num_label = text_layer_create(GRect(s_center.x-15, s_center.y-16, 35, 35));
+  s_num_label = text_layer_create(GRect(s_center.x-17, s_center.y-17, 35, 35));
   text_layer_set_text(s_num_label, s_num_buffer);
   text_layer_set_background_color(s_num_label, GColorClear);
   text_layer_set_text_color(s_num_label, GColorWhite);
   text_layer_set_font(s_num_label, fonts_get_system_font(FONT_KEY_LECO_26_BOLD_NUMBERS_AM_PM));
-
+  text_layer_set_text_alignment(s_num_label,GTextAlignmentCenter);
   layer_add_child(window_layer, text_layer_get_layer(s_num_label));
 
 }
