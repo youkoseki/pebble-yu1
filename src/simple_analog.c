@@ -29,6 +29,7 @@ static void hands_update_proc(Layer *layer, GContext *ctx) {
   graphics_context_set_stroke_color(ctx, GColorWhite);
   
   gpath_rotate_to(s_minute_arrow, TRIG_MAX_ANGLE * t->tm_min / 60);
+//  gpath_rotate_to(s_minute_arrow, TRIG_MAX_ANGLE *15 / 60);
   gpath_draw_filled(ctx, s_minute_arrow);
   gpath_draw_outline(ctx, s_minute_arrow);
 
@@ -41,9 +42,9 @@ static void hands_update_proc(Layer *layer, GContext *ctx) {
 
   // dot in the middle
   graphics_context_set_fill_color(ctx, GColorRed);
-  graphics_fill_circle(ctx, s_center, 24);
+  graphics_fill_circle(ctx, s_center, 26);
   graphics_context_set_fill_color(ctx, GColorBlack);
-  graphics_fill_circle(ctx, s_center, 18);
+  graphics_fill_circle(ctx, s_center, 20);
 }
 
 static void date_update_proc(Layer *layer, GContext *ctx) {
@@ -55,7 +56,7 @@ static void date_update_proc(Layer *layer, GContext *ctx) {
 
   strftime(s_num_buffer, sizeof(s_num_buffer), "%M", t);
   text_layer_set_text(s_num_label, s_num_buffer);
-//  text_layer_set_text(s_num_label,"22");
+//  text_layer_set_text(s_num_label,"88");
 }
 
 static void handle_second_tick(struct tm *tick_time, TimeUnits units_changed) {
@@ -89,11 +90,13 @@ static void window_load(Window *window) {
   layer_set_update_proc(s_hands_layer, hands_update_proc);
   layer_add_child(window_layer, s_hands_layer);
 
-  s_num_label = text_layer_create(GRect(s_center.x-17, s_center.y-17, 35, 35));
+  s_num_label = text_layer_create(GRect(s_center.x-17, s_center.y-16, 35, 35));
+//  s_num_label = text_layer_create(GRect(s_center.x-22, s_center.y-19, 44, 44));
   text_layer_set_text(s_num_label, s_num_buffer);
   text_layer_set_background_color(s_num_label, GColorClear);
   text_layer_set_text_color(s_num_label, GColorWhite);
   text_layer_set_font(s_num_label, fonts_get_system_font(FONT_KEY_LECO_26_BOLD_NUMBERS_AM_PM));
+//  text_layer_set_font(s_num_label, fonts_get_system_font(FONT_KEY_BITHAM_30_BLACK));
   text_layer_set_text_alignment(s_num_label,GTextAlignmentCenter);
   layer_add_child(window_layer, text_layer_get_layer(s_num_label));
 
